@@ -1,14 +1,22 @@
-import React from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
+import {RootStackParamList} from '../../models/navigation';
 
 const IMAGE_URL = require('../../assets/background.jpeg');
 
-export const HomeView = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+export const HomeView = ({navigation}: Props) => {
+  const navigateToSignIn = useCallback(() => {
+    navigation.navigate('SignIn');
+  }, [navigation]);
+
   return (
     <Container>
       <Background source={IMAGE_URL} resizeMode="cover">
         <StartButton>
-          <ButtonText>Начать</ButtonText>
+          <ButtonText onPress={navigateToSignIn}>Начать</ButtonText>
         </StartButton>
       </Background>
     </Container>
