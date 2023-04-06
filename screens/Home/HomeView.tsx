@@ -4,11 +4,13 @@ import styled from 'styled-components/native';
 import {RootStackParamList, Routes} from '../../models/navigation';
 import axios from 'axios';
 import {DataItem} from '../../models/data';
+import {ModalComponent} from '../../components/ModalComponent';
 
 type Props = NativeStackScreenProps<RootStackParamList, Routes.Home>;
 
 export const HomeView = ({navigation}: Props) => {
   const [data, setData] = useState<DataItem | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     axios
@@ -22,16 +24,25 @@ export const HomeView = ({navigation}: Props) => {
   }
 
   return (
-    <Container>
-      <ImageContainer>
-        <Image source={{uri: data.url}} />
-      </ImageContainer>
-      <MainContainer>
-        <Title>{data.title}</Title>
-        <Date>{data.date}</Date>
-        <Description>{data.explanation}</Description>
-      </MainContainer>
-    </Container>
+    <>
+      <Container>
+        <PressableContainer onPress={() => setModalVisible(true)}>
+          <Image source={{uri: data.url}} />
+        </PressableContainer>
+        <MainContainer>
+          <Title>{data.title}</Title>
+          <Date>{data.date}</Date>
+          <Description>{data.explanation}</Description>
+        </MainContainer>
+      </Container>
+      {modalVisible && (
+        <ModalComponent
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          imageUrl={data.hdurl}
+        />
+      )}
+    </>
   );
 };
 
@@ -43,7 +54,7 @@ const Container = styled.View`
   padding-horizontal: 20px;
 `;
 
-const ImageContainer = styled.TouchableOpacity`
+const PressableContainer = styled.TouchableOpacity`
   width: 100%;
   height: 200px;
   border-radius: 12px;
