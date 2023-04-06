@@ -1,4 +1,11 @@
+export enum Routes {
+  Start = 'Start',
+  SignIn = 'SignIn',
+  Home = 'Home',
+}
+
 export type RootStackParamList = {
-  Home: undefined;
-  SignIn: undefined;
+  [Routes.Start]: undefined;
+  [Routes.SignIn]: undefined;
+  [Routes.Home]: undefined;
 };
