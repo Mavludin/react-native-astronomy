@@ -1,37 +1,42 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
 
+type UserData = {
+  login: string;
+  email: string;
+};
+
 export type AuthState = {
   isLoggedIn: boolean;
-  userLogin: string;
+  userData: UserData | null;
 };
 
 type PayloadType = {
-  userLogin: string;
+  userData: UserData;
 };
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  userLogin: '',
+  userData: null,
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logIn: (state, action: PayloadAction<PayloadType>) => {
+    signIn: (state, action: PayloadAction<PayloadType>) => {
       state.isLoggedIn = true;
-      state.userLogin = action.payload.userLogin;
+      state.userData = action.payload.userData;
     },
-    logOut: state => {
+    signOut: state => {
       state.isLoggedIn = false;
     },
   },
 });
 
-export const {logIn, logOut} = authSlice.actions;
+export const {signIn, signOut} = authSlice.actions;
 
 export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
-export const selectUserLogin = (state: RootState) => state.auth.userLogin;
+export const selectUserData = (state: RootState) => state.auth.userData;
 
 export default authSlice.reducer;

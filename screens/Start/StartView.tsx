@@ -1,13 +1,12 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
-import {RootStackParamList, Routes} from '../../models/navigation';
+import {Routes, useAppNavigation} from '../../models/navigation';
 
 const IMAGE_URL = require('../../assets/background.jpeg');
 
-type Props = NativeStackScreenProps<RootStackParamList, Routes.Start>;
+export const StartView = () => {
+  const navigation = useAppNavigation();
 
-export const StartView = ({navigation}: Props) => {
   const navigateToSignIn = useCallback(() => {
     navigation.navigate(Routes.SignIn);
   }, [navigation]);
@@ -15,8 +14,8 @@ export const StartView = ({navigation}: Props) => {
   return (
     <Container>
       <Background source={IMAGE_URL} resizeMode="cover">
-        <StartButton>
-          <ButtonText onPress={navigateToSignIn}>Начать</ButtonText>
+        <StartButton onPress={navigateToSignIn}>
+          <Title>Начать</Title>
         </StartButton>
       </Background>
     </Container>
@@ -46,7 +45,7 @@ const StartButton = styled.TouchableOpacity`
   border-radius: 16px;
 `;
 
-const ButtonText = styled.Text`
+const Title = styled.Text`
   font-size: 24px;
   color: #000;
 `;

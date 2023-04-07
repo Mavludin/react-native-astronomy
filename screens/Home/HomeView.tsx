@@ -1,14 +1,10 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
-import {RootStackParamList, Routes} from '../../models/navigation';
 import axios from 'axios';
 import {DataItem} from '../../models/data';
 import {ModalComponent} from '../../components/ModalComponent';
 
-type Props = NativeStackScreenProps<RootStackParamList, Routes.Home>;
-
-export const HomeView = ({navigation}: Props) => {
+export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
