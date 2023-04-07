@@ -5,20 +5,24 @@ import {StartView} from './screens/Start/StartView';
 import {SignInView} from './screens/SignIn/SignInView';
 import {RootStackParamList, Routes} from './models/navigation';
 import {HomeView} from './screens/Home/HomeView';
+import {Provider} from 'react-redux';
+import {store} from './store';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName={Routes.Start}>
-        <Stack.Screen name={Routes.Start} component={StartView} />
-        <Stack.Screen name={Routes.SignIn} component={SignInView} />
-        <Stack.Screen name={Routes.Home} component={HomeView} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{headerShown: false}}
+          initialRouteName={Routes.Start}>
+          <Stack.Screen name={Routes.Start} component={StartView} />
+          <Stack.Screen name={Routes.SignIn} component={SignInView} />
+          <Stack.Screen name={Routes.Home} component={HomeView} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
