@@ -4,7 +4,7 @@ import {Routes, useAppNavigation} from '../../models/navigation';
 import {useAppDispatch} from '../../store/hooks';
 import {signIn} from '../../store/slices/auth';
 
-const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/g;
+const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
 export const SignInView = () => {
   const dispatch = useAppDispatch();
@@ -110,6 +110,7 @@ const FormContainer = styled.View`
 
 const FormInput = styled.TextInput`
   width: 100%;
+  height: 45px;
   align-items: center;
   justify-content: center;
   border: 1px solid black;
@@ -121,10 +122,10 @@ const FormInput = styled.TextInput`
 const SubmitBtn = styled.TouchableOpacity`
   width: 100%;
   align-items: center;
+  justify-content: center;
   border: 1px solid black;
   border-radius: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  height: 45px;
 `;
 
 const Title = styled.Text`
