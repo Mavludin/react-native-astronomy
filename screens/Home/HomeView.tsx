@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
-import {SafeAreaView} from 'react-native';
+import {Linking, SafeAreaView} from 'react-native';
 import axios from 'axios';
 import {DataItem} from '../../models/data';
 import {Header} from '../../components/Header';
@@ -15,6 +15,10 @@ export const HomeView = () => {
       .get('https://go-apod.herokuapp.com/apod')
       .then(res => setData(res.data))
       .catch(console.error);
+  }, []);
+
+  const openWeb = useCallback(() => {
+    Linking.openURL('https://go-apod.herokuapp.com/#api-docs');
   }, []);
 
   if (!data) {
@@ -37,6 +41,9 @@ export const HomeView = () => {
             <Description>{data.explanation}</Description>
           </InnerContainer>
         </BodyContainer>
+        <ResourceButton onPress={openWeb}>
+          <ResourceText>Ссылка на ресурс</ResourceText>
+        </ResourceButton>
       </Container>
       <ImageModal
         visible={modalVisible}
@@ -75,7 +82,7 @@ const Image = styled.Image`
 
 const InnerContainer = styled.View`
   width: 100%;
-  justify-content: flex-start;
+  justify-content: center;
   border-radius: 20px;
   padding: 15px;
   background-color: #232323;
@@ -99,4 +106,14 @@ const Description = styled.Text`
   color: white;
   font-style: italic;
   font-size: 16px;
+`;
+
+const ResourceButton = styled.TouchableOpacity`
+  margin-top: 15px;
+`;
+
+const ResourceText = styled.Text`
+  font-size: 18px;
+  font-weight: 800;
+  color: #8120f7;
 `;
