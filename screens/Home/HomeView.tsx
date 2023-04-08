@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 import {SafeAreaView} from 'react-native';
 import axios from 'axios';
 import {DataItem} from '../../models/data';
-import {ModalComponent} from '../../components/ModalComponent';
 import {Header} from '../../components/Header';
+import {ImageModal} from '../../components/ImageModal';
 
 export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
@@ -38,13 +38,11 @@ export const HomeView = () => {
           </InnerContainer>
         </BodyContainer>
       </Container>
-      {modalVisible && (
-        <ModalComponent
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          imageUrl={data.hdurl}
-        />
-      )}
+      <ImageModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        imageUrl={data.hdurl}
+      />
     </>
   );
 };
