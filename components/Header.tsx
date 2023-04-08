@@ -40,6 +40,7 @@ const Container = styled.View`
   width: 100%;
   padding-horizontal: 20px;
   margin-bottom: 20px;
+  margin-top: 20px;
 `;
 
 const Left = styled.View`
@@ -51,7 +52,7 @@ const Left = styled.View`
 
 const Text = styled.Text`
   color: white;
-  margin-left: 5px;
+  margin-left: 8px;
 `;
 
 const SignOutButton = styled.TouchableOpacity`

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
-import {Linking, SafeAreaView} from 'react-native';
+import {Linking} from 'react-native';
 import axios from 'axios';
 import {DataItem} from '../../models/data';
 import {Header} from '../../components/Header';
@@ -26,9 +26,8 @@ export const HomeView = () => {
   }
 
   return (
-    <>
+    <SafeArea>
       <Container>
-        <SafeAreaView />
         <Header />
 
         <BodyContainer>
@@ -50,15 +49,16 @@ export const HomeView = () => {
         onClose={() => setModalVisible(false)}
         imageUrl={data.hdurl}
       />
-    </>
+    </SafeArea>
   );
 };
 
-const Container = styled.View`
-  height: 100%;
-  align-items: center;
-  justify-content: flex-start;
+const SafeArea = styled.SafeAreaView`
+  padding-bottom: 20px;
   background-color: #2c2c2d;
+`;
+
+const Container = styled.ScrollView`
   padding-horizontal: 20px;
 `;
 

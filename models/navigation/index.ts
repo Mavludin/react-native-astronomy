@@ -5,12 +5,14 @@ export enum Routes {
   Start = 'Start',
   SignIn = 'SignIn',
   Home = 'Home',
+  NoConnection = 'NoConnection',
 }
 
 export type RootStackParamList = {
   [Routes.Start]: undefined;
   [Routes.SignIn]: undefined;
   [Routes.Home]: undefined;
+  [Routes.NoConnection]: undefined;
 };
 
 export const useAppNavigation =

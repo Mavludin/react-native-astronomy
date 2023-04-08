@@ -36,16 +36,18 @@ const Background = styled.ImageBackground`
 `;
 
 const StartButton = styled.TouchableOpacity`
-  padding-left: 30px;
-  padding-right: 30px;
+  width: 150px;
+  height: 50px;
   padding-top: 5px;
   padding-bottom: 5px;
+  justify-content: center;
+  align-items: center;
 
   background-color: #fff;
   border-radius: 16px;
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
+  font-size: 28px;
   color: #000;
 `;
