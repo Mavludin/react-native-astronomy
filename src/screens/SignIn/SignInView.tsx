@@ -2,8 +2,8 @@ import React, {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {Animated, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import AndroidKeyboardAdjust from 'rn-android-keyboard-adjust';
-import {IS_ANDROID} from '../../utils/device';
-import {SignInForm} from '../../components/signIn/SignInForm';
+import {IS_ANDROID} from 'utils/device';
+import {SignInForm} from 'components/signIn/SignInForm';
 
 export const SignInView = () => {
   const [isKeyboardShown, setKeyboardShown] = useState(false);

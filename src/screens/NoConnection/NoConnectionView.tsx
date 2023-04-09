@@ -1,6 +1,6 @@
+import {SpaceStationIcon} from 'components/icons/SpaceStationIcon';
 import React from 'react';
 import styled from 'styled-components/native';
-import {SpaceStationIcon} from '../../components/icons/SpaceStationIcon';
 
 export const NoConnectionView = () => {
   return (

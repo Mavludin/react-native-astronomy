@@ -2,9 +2,9 @@ import React, {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {TextInput} from 'react-native';
 import {FormErrors} from './FormErrors';
-import {SpaceshipIcon} from '../../components/icons/SpaceshipIcon';
-import {signIn} from '../../store/slices/auth';
-import {useAppDispatch} from '../../store/hooks';
+import {useAppDispatch} from 'store/hooks';
+import {signIn} from 'store/slices/auth';
+import {SpaceshipIcon} from 'components/icons/SpaceshipIcon';
 
 const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
@@ -38,7 +38,7 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
       seIsLoginValid(true);
     }
 
-    if (!email.length || !VALID_EMAIL_REGEX.test(email)) {
+    if (!VALID_EMAIL_REGEX.test(email)) {
       setIsEmailValid(false);
       return;
     }

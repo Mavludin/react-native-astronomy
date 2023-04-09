@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
-import {Routes, useAppNavigation} from '../../utils/navigation';
+import {Routes, useAppNavigation} from 'utils/navigation';
 
-const IMAGE_URL = require('../../assets/background.jpeg');
+const IMAGE_URL = require('assets/background.jpeg');
 
 export const StartView = () => {
   const navigation = useAppNavigation();

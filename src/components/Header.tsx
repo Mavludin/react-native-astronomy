@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {useAppDispatch, useAppSelector} from '../store/hooks';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {selectUserData, signOut} from '../store/slices/auth';
 import styled from 'styled-components/native';
 import {UserIcon} from './icons/UserIcon';

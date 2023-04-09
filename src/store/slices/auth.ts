@@ -3,7 +3,7 @@ import {RootState} from '..';
 import {
   removeDataFromAsyncStorage,
   setDataToAsyncStorage,
-} from '../../utils/asyncStorage';
+} from 'utils/asyncStorage';
 
 export type UserData = {
   login: string;

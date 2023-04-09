@@ -2,9 +2,9 @@ import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {Linking} from 'react-native';
 import axios from 'axios';
-import {DataItem} from '../../utils/data';
-import {Header} from '../../components/Header';
-import {ImageModal} from '../../components/ImageModal';
+import {Header} from 'components/Header';
+import {ImageModal} from 'components/ImageModal';
+import {DataItem} from 'utils/data';
 
 export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
@@ -54,6 +54,7 @@ export const HomeView = () => {
 };
 
 const SafeArea = styled.SafeAreaView`
+  padding-top: 20px;
   padding-bottom: 20px;
   background-color: #2c2c2d;
 `;

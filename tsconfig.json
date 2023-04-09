@@ -6,5 +6,15 @@
       "styled-components-react-native",
     ],
     "baseUrl": "./src",
-  }
+  },
+  "typeRoots": [
+    "./node_modules/@types/",
+  ],
+  "include": ["src", "*.config.js"],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
 }
