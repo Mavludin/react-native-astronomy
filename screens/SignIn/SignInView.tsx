@@ -1,133 +1,31 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import {useAppDispatch} from '../../store/hooks';
-import {signIn} from '../../store/slices/auth';
-
-const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {SignInForm} from '../../components/SignInForm';
 
 export const SignInView = () => {
-  const dispatch = useAppDispatch();
-
-  const [login, setLogin] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [isloginValid, seIsLoginValid] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPassValid, setIsPassValid] = useState(true);
-
-  const handleSignIn = useCallback(() => {
-    if (login.length < 3) {
-      seIsLoginValid(false);
-      return;
-    }
-
-    if (!isloginValid) {
-      seIsLoginValid(true);
-    }
-
-    if (!email.length || !VALID_EMAIL_REGEX.test(email)) {
-      setIsEmailValid(false);
-      return;
-    }
-
-    if (!isEmailValid) {
-      setIsEmailValid(true);
-    }
-
-    if (password.length < 8) {
-      setIsPassValid(false);
-      return;
-    }
-
-    if (!isPassValid) {
-      setIsPassValid(true);
-    }
-
-    dispatch(
-      signIn({
-        login,
-        email,
-      }),
-    );
-  }, [
-    dispatch,
-    email,
-    isEmailValid,
-    isPassValid,
-    isloginValid,
-    login,
-    password.length,
-  ]);
-
   return (
-    <Container>
-      <FormContainer>
-        <FormInput
-          placeholder="Login..."
-          onChangeText={setLogin}
-          value={login}
-        />
-        <FormInput
-          placeholder="Email..."
-          onChangeText={setEmail}
-          value={email}
-        />
-        <FormInput
-          placeholder="Password..."
-          onChangeText={setPassword}
-          value={password}
-        />
-        <SubmitBtn onPressOut={handleSignIn}>
-          <Title>Войти</Title>
-        </SubmitBtn>
-        {!isloginValid && <ErrorMessage>Длина логина не меньше 3</ErrorMessage>}
-        {!isEmailValid && <ErrorMessage>Формат почты неверный</ErrorMessage>}
-        {!isPassValid && <ErrorMessage>Длина пароля не меньше 8</ErrorMessage>}
-      </FormContainer>
-    </Container>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
+        <SafeAreaView style={{backgroundColor: '#1f1f20'}} />
+        <ScrolledContainer>
+          <SignInForm />
+        </ScrolledContainer>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
-const Container = styled.View`
+const ScrolledContainer = styled.ScrollView`
   flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-const FormContainer = styled.View`
-  align-items: flex-start;
-  width: 70%;
-  row-gap: 20px;
-`;
-
-const FormInput = styled.TextInput`
-  width: 100%;
-  height: 45px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 20px;
-  padding-left: 15px;
-  padding-right: 15px;
-`;
-
-const SubmitBtn = styled.TouchableOpacity`
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 20px;
-  height: 45px;
-`;
-
-const Title = styled.Text`
-  font-size: 24px;
-  color: #000;
-`;
-
-const ErrorMessage = styled.TextInput`
-  width: 100%;
-  color: crimson;
-  font-size: 18px;
+  padding-horizontal: 40px;
+  padding-bottom: 40px;
+  padding-top: 40px;
+  height: 100%;
+  background-color: #1f1f20;
 `;
