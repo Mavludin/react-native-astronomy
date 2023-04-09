@@ -7,11 +7,12 @@ import React, {useCallback, useEffect} from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import {StartView} from './screens/Start/StartView';
 import {SignInView} from './screens/SignIn/SignInView';
-import {RootStackParamList, Routes} from './models/navigation';
+import {RootStackParamList, Routes} from './utils/navigation';
 import {HomeView} from './screens/Home/HomeView';
-import {Provider} from 'react-redux';
-import {store} from './store';
 import {NoConnectionView} from './screens/NoConnection/NoConnectionView';
+import {useAppDispatch, useAppSelector} from './store/hooks';
+import {UserData, selectIsLoggedIn, signIn} from './store/slices/auth';
+import {getDataFromAsyncStorage} from './utils/asyncStorage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,11 +20,13 @@ function App() {
   const navRef = React.createRef<NavigationContainerRef<RootStackParamList>>();
   const routeNameRef = React.useRef<string>();
 
+  const dispatch = useAppDispatch();
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
   const onNavigationReady = useCallback(() => {
     routeNameRef.current = navRef.current?.getCurrentRoute()?.name;
   }, [navRef]);
-
-  console.log('routeNameRef', routeNameRef.current);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -46,22 +49,46 @@ function App() {
     return unsubscribe;
   }, [navRef]);
 
+  useEffect(() => {
+    const checkAsyncStorage = async () => {
+      const data = await getDataFromAsyncStorage('userData');
+
+      if (data) {
+        const userData = JSON.parse(data) as UserData;
+        dispatch(signIn(userData));
+      }
+    };
+
+    checkAsyncStorage();
+  }, [dispatch]);
+
   return (
-    <Provider store={store}>
-      <NavigationContainer onReady={onNavigationReady} ref={navRef}>
-        <Stack.Navigator
-          screenOptions={{headerShown: false}}
-          initialRouteName={Routes.Start}>
-          <Stack.Screen name={Routes.Start} component={StartView} />
-          <Stack.Screen name={Routes.SignIn} component={SignInView} />
-          <Stack.Screen name={Routes.Home} component={HomeView} />
+    <NavigationContainer onReady={onNavigationReady} ref={navRef}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName={Routes.Start}>
+        <>
+          {isLoggedIn ? (
+            <Stack.Screen name={Routes.Home} component={HomeView} />
+          ) : (
+            <>
+              <Stack.Screen
+                name={Routes.Start}
+                component={StartView}
+                options={{
+                  animationTypeForReplace: 'pop',
+                }}
+              />
+              <Stack.Screen name={Routes.SignIn} component={SignInView} />
+            </>
+          )}
           <Stack.Screen
             name={Routes.NoConnection}
             component={NoConnectionView}
           />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+        </>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

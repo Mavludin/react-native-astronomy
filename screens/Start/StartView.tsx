@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
-import {Routes, useAppNavigation} from '../../models/navigation';
+import {Routes, useAppNavigation} from '../../utils/navigation';
 
 const IMAGE_URL = require('../../assets/background.jpeg');
 

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {Linking} from 'react-native';
 import axios from 'axios';
-import {DataItem} from '../../models/data';
+import {DataItem} from '../../utils/data';
 import {Header} from '../../components/Header';
 import {ImageModal} from '../../components/ImageModal';
 
@@ -110,6 +110,7 @@ const Description = styled.Text`
 
 const ResourceButton = styled.TouchableOpacity`
   margin-top: 15px;
+  align-items: center;
 `;
 
 const ResourceText = styled.Text`

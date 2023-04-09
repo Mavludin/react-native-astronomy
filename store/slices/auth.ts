@@ -1,7 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
+import {
+  removeDataFromAsyncStorage,
+  setDataToAsyncStorage,
+} from '../../utils/asyncStorage';
 
-type UserData = {
+export type UserData = {
   login: string;
   email: string;
 };
@@ -9,10 +13,6 @@ type UserData = {
 export type AuthState = {
   isLoggedIn: boolean;
   userData: UserData | null;
-};
-
-type PayloadType = {
-  userData: UserData;
 };
 
 const initialState: AuthState = {
@@ -24,12 +24,14 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: (state, action: PayloadAction<PayloadType>) => {
+    signIn: (state, action: PayloadAction<UserData>) => {
       state.isLoggedIn = true;
-      state.userData = action.payload.userData;
+      state.userData = action.payload;
+      setDataToAsyncStorage('userData', state.userData);
     },
     signOut: state => {
       state.isLoggedIn = false;
+      removeDataFromAsyncStorage('userData');
     },
   },
 });

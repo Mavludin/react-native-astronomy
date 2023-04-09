@@ -1,6 +1,5 @@
 import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
-import {Routes, useAppNavigation} from '../../models/navigation';
 import {useAppDispatch} from '../../store/hooks';
 import {signIn} from '../../store/slices/auth';
 
@@ -8,7 +7,6 @@ const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
 export const SignInView = () => {
   const dispatch = useAppDispatch();
-  const navigation = useAppNavigation();
 
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
@@ -28,7 +26,7 @@ export const SignInView = () => {
       seIsLoginValid(true);
     }
 
-    if (!VALID_EMAIL_REGEX.test(email)) {
+    if (!email.length || !VALID_EMAIL_REGEX.test(email)) {
       setIsEmailValid(false);
       return;
     }
@@ -48,14 +46,10 @@ export const SignInView = () => {
 
     dispatch(
       signIn({
-        userData: {
-          login,
-          email,
-        },
+        login,
+        email,
       }),
     );
-
-    navigation.navigate(Routes.Home);
   }, [
     dispatch,
     email,
@@ -63,7 +57,6 @@ export const SignInView = () => {
     isPassValid,
     isloginValid,
     login,
-    navigation,
     password.length,
   ]);
 

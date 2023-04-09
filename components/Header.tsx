@@ -2,19 +2,16 @@ import React, {useCallback} from 'react';
 import {useAppDispatch, useAppSelector} from '../store/hooks';
 import {selectUserData, signOut} from '../store/slices/auth';
 import styled from 'styled-components/native';
-import {Routes, useAppNavigation} from '../models/navigation';
 import {UserIcon} from './UserIcon';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const navigation = useAppNavigation();
 
   const userData = useAppSelector(selectUserData);
 
   const handleSignOut = useCallback(() => {
     dispatch(signOut());
-    navigation.navigate(Routes.Start);
-  }, [dispatch, navigation]);
+  }, [dispatch]);
 
   return (
     <Container>
