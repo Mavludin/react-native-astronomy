@@ -3,7 +3,7 @@ import {
   NavigationContainerRef,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import {StartView} from './screens/Start/StartView';
 import {SignInView} from './screens/SignIn/SignInView';
@@ -13,12 +13,15 @@ import {NoConnectionView} from './screens/NoConnection/NoConnectionView';
 import {useAppDispatch, useAppSelector} from './store/hooks';
 import {UserData, selectIsLoggedIn, signIn} from './store/slices/auth';
 import {getDataFromAsyncStorage} from './utils/asyncStorage';
+import {SplashView} from './screens/Splash/SplashView';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   const navRef = React.createRef<NavigationContainerRef<RootStackParamList>>();
   const routeNameRef = React.useRef<string>();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -50,6 +53,7 @@ function App() {
   }, [navRef]);
 
   useEffect(() => {
+    setIsLoading(true);
     const checkAsyncStorage = async () => {
       const data = await getDataFromAsyncStorage('userData');
 
@@ -57,10 +61,18 @@ function App() {
         const userData = JSON.parse(data) as UserData;
         dispatch(signIn(userData));
       }
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     };
 
     checkAsyncStorage();
   }, [dispatch]);
+
+  if (isLoading) {
+    return <SplashView />;
+  }
 
   return (
     <NavigationContainer onReady={onNavigationReady} ref={navRef}>
@@ -69,7 +81,13 @@ function App() {
         initialRouteName={Routes.Start}>
         <>
           {isLoggedIn ? (
-            <Stack.Screen name={Routes.Home} component={HomeView} />
+            <Stack.Screen
+              name={Routes.Home}
+              component={HomeView}
+              options={{
+                animationTypeForReplace: 'pop',
+              }}
+            />
           ) : (
             <>
               <Stack.Screen
@@ -79,7 +97,13 @@ function App() {
                   animationTypeForReplace: 'pop',
                 }}
               />
-              <Stack.Screen name={Routes.SignIn} component={SignInView} />
+              <Stack.Screen
+                name={Routes.SignIn}
+                component={SignInView}
+                options={{
+                  animationTypeForReplace: 'pop',
+                }}
+              />
             </>
           )}
           <Stack.Screen

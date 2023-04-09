@@ -37,7 +37,6 @@ const Container = styled.View`
   width: 100%;
   padding-horizontal: 20px;
   margin-bottom: 20px;
-  margin-top: 20px;
 `;
 
 const Left = styled.View`
