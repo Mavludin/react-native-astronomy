@@ -1,14 +1,19 @@
 import React, {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {useAppDispatch} from '../../../src/store/hooks';
-import {signIn} from '../../../src/store/slices/auth';
 import {TextInput} from 'react-native';
 import {FormErrors} from './FormErrors';
-import {SpaceshipIcon} from '../icons/SpaceshipIcon';
+import {SpaceshipIcon} from '../../components/icons/SpaceshipIcon';
+import {signIn} from '../../store/slices/auth';
+import {useAppDispatch} from '../../store/hooks';
 
 const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
-export const SignInForm = () => {
+type Props = {
+  handleInputFocus: () => void;
+  handleInputBlur: () => void;
+};
+
+export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
   const dispatch = useAppDispatch();
 
   const [login, setLogin] = useState('');
@@ -79,8 +84,12 @@ export const SignInForm = () => {
         autoCapitalize="none"
         autoCorrect={false}
         returnKeyType="next"
+        textContentType="username"
         ref={loginRef}
         onSubmitEditing={() => emailRef.current?.focus()}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        autoComplete="username"
       />
       <FormInput
         placeholder="Email..."
@@ -94,6 +103,10 @@ export const SignInForm = () => {
         textContentType="emailAddress"
         ref={emailRef}
         onSubmitEditing={() => passwordRef.current?.focus()}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        caretHidden={false}
+        autoComplete="email"
       />
       <FormInput
         placeholder="Password..."
@@ -105,6 +118,9 @@ export const SignInForm = () => {
         returnKeyType="done"
         value={password}
         ref={passwordRef}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        autoComplete="password"
       />
       <SubmitBtn onPress={handleSignIn}>
         <Title>Войти</Title>
