@@ -24,7 +24,7 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
 
-  const [isloginValid, seIsLoginValid] = useState(true);
+  const [isLoginValid, seIsLoginValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPassValid, setIsPassValid] = useState(true);
 
@@ -34,11 +34,11 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
       return;
     }
 
-    if (!isloginValid) {
+    if (!isLoginValid) {
       seIsLoginValid(true);
     }
 
-    if (!VALID_EMAIL_REGEX.test(email)) {
+    if (!email.match(VALID_EMAIL_REGEX)) {
       setIsEmailValid(false);
       return;
     }
@@ -66,8 +66,8 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
     dispatch,
     email,
     isEmailValid,
+    isLoginValid,
     isPassValid,
-    isloginValid,
     login,
     password.length,
   ]);
@@ -127,7 +127,7 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
       </SubmitBtn>
 
       <FormErrors
-        isLoginValid={isloginValid}
+        isLoginValid={isLoginValid}
         isEmailValid={isEmailValid}
         isPassValid={isPassValid}
       />
