@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {SaturnIcon} from '../../components/SaturnIcon';
+import {SaturnIcon} from '../../components/icons/SaturnIcon';
 
 export const SplashView = () => {
   return (

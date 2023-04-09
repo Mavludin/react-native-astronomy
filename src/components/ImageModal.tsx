@@ -3,7 +3,7 @@ import {Modal, SafeAreaView} from 'react-native';
 
 import styled from 'styled-components/native';
 
-import {CloseIcon} from './CloseIcon';
+import {CloseIcon} from './icons/CloseIcon';
 
 type Props = {
   visible: boolean;

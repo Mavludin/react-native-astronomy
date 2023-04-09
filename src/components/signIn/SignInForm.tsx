@@ -1,9 +1,10 @@
 import React, {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components/native';
-import {useAppDispatch} from '../store/hooks';
-import {signIn} from '../store/slices/auth';
-import {SpaceshipIcon} from '../components/SpaceshipIcon';
+import {useAppDispatch} from '../../../src/store/hooks';
+import {signIn} from '../../../src/store/slices/auth';
 import {TextInput} from 'react-native';
+import {FormErrors} from './FormErrors';
+import {SpaceshipIcon} from '../icons/SpaceshipIcon';
 
 const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
@@ -108,9 +109,12 @@ export const SignInForm = () => {
       <SubmitBtn onPress={handleSignIn}>
         <Title>Войти</Title>
       </SubmitBtn>
-      {!isloginValid && <ErrorMessage>Длина логина не меньше 3</ErrorMessage>}
-      {!isEmailValid && <ErrorMessage>Формат почты неверный</ErrorMessage>}
-      {!isPassValid && <ErrorMessage>Длина пароля не меньше 8</ErrorMessage>}
+
+      <FormErrors
+        isLoginValid={isloginValid}
+        isEmailValid={isEmailValid}
+        isPassValid={isPassValid}
+      />
     </FormContainer>
   );
 };
@@ -156,10 +160,4 @@ const Title = styled.Text`
   font-size: 24px;
   color: #8120f7;
   font-weight: 600;
-`;
-
-const ErrorMessage = styled.TextInput`
-  width: 100%;
-  color: crimson;
-  font-size: 18px;
 `;

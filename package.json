@@ -23,6 +23,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-svg": "^13.9.0",
     "react-redux": "^8.0.5",
+    "rn-android-keyboard-adjust": "^2.1.2",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {

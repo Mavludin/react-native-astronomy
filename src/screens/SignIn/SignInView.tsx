@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {SignInForm} from '../../components/SignInForm';
+import {SignInForm} from '../../components/signIn/SignInForm';
 
 export const SignInView = () => {
   return (

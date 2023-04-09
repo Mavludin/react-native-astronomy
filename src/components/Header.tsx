@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {useAppDispatch, useAppSelector} from '../store/hooks';
 import {selectUserData, signOut} from '../store/slices/auth';
 import styled from 'styled-components/native';
-import {UserIcon} from './UserIcon';
+import {UserIcon} from './icons/UserIcon';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
