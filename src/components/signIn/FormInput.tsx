@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 type Props = {
   placeholder: string;
   returnKeyType: ReturnKeyType;
-  textContentType: 'username' | 'emailAddress';
+  textContentType: 'username' | 'emailAddress' | 'password';
   keyboardType?: KeyboardTypeOptions;
   autoComplete: 'username' | 'email' | 'password';
   onFocus: () => void;

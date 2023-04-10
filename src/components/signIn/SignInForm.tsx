@@ -93,7 +93,7 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
         placeholder="Email..."
         onChangeText={setEmail}
         value={email}
-        returnKeyType="done"
+        returnKeyType="next"
         textContentType="emailAddress"
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
@@ -102,11 +102,11 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
         ref={emailRef}
       />
       <FormInput
-        placeholder="Email..."
+        placeholder="Password..."
         onChangeText={setPassword}
         value={password}
-        returnKeyType="next"
-        textContentType="emailAddress"
+        returnKeyType="done"
+        textContentType="password"
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         autoComplete="password"
