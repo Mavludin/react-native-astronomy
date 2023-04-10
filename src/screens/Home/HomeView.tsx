@@ -6,6 +6,7 @@ import {Header} from 'components/Header';
 import {ImageModal} from 'components/ImageModal';
 import {DataItem} from 'utils/data';
 import FastImage from 'react-native-fast-image';
+import {Loader} from 'components/Loader';
 
 export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
@@ -39,7 +40,7 @@ export const HomeView = () => {
   }, [data?.hdurl, data?.url]);
 
   if (!data) {
-    return null;
+    return <Loader />;
   }
 
   return (
