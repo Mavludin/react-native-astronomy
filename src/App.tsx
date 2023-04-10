@@ -31,6 +31,7 @@ function App() {
     routeNameRef.current = navRef.current?.getCurrentRoute()?.name;
   }, [navRef]);
 
+  // Проверка подключения к интернету
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       const previousRouteName = routeNameRef.current as Routes;
@@ -52,6 +53,7 @@ function App() {
     return unsubscribe;
   }, [navRef]);
 
+  // Проверка вошел ли пользователь в аккаунт ранее
   useEffect(() => {
     setIsLoading(true);
     const checkAsyncStorage = async () => {

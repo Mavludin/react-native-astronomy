@@ -20,7 +20,7 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginRef = useRef<TextInput>(null);
+  // Рефы нужны для перехода от одного input поля к следующему
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
 
@@ -28,6 +28,7 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPassValid, setIsPassValid] = useState(true);
 
+  // Поэтапная валидация
   const handleSignIn = useCallback(() => {
     if (login.length < 3) {
       seIsLoginValid(false);
@@ -85,7 +86,6 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
         autoCorrect={false}
         returnKeyType="next"
         textContentType="username"
-        ref={loginRef}
         onSubmitEditing={() => emailRef.current?.focus()}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}

@@ -10,6 +10,7 @@ export const SignInView = () => {
 
   const animatedValue = useRef(new Animated.Value(1)).current;
 
+  // Анимации для показа и скрытия клавиатуры
   const positionOutsideInput = useCallback(() => {
     Animated.timing(animatedValue, {
       toValue: 0,

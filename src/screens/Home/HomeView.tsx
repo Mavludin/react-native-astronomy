@@ -24,6 +24,7 @@ export const HomeView = () => {
     Linking.openURL('https://go-apod.herokuapp.com/#api-docs');
   }, []);
 
+  // Заблаговременная загрузка картинок
   useEffect(() => {
     if (data?.url && data.hdurl) {
       FastImage.preload([
