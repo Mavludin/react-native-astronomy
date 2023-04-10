@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, SafeAreaView} from 'react-native';
+import {Modal} from 'react-native';
 
 import styled from 'styled-components/native';
 
@@ -13,6 +13,7 @@ type Props = {
 
 export const ImageModal = ({visible, onClose, imageUrl}: Props) => {
   const [isImageLoading, setIsImageLoading] = useState(false);
+
   return (
     <Modal
       transparent
@@ -21,22 +22,18 @@ export const ImageModal = ({visible, onClose, imageUrl}: Props) => {
       visible={visible}
       animationType="fade"
       statusBarTranslucent>
-      <SafeAreaView />
-      {isImageLoading && (
-        <LoaderWrapper>
-          <LoaderText>Loading...</LoaderText>
-        </LoaderWrapper>
-      )}
       <SModalContent>
+        <SContentHeader>
+          <CloseButton onPress={onClose}>
+            <CloseIcon />
+          </CloseButton>
+        </SContentHeader>
         <SContentWrapper>
-          <SContentHeader>
-            <CloseButton onPress={onClose}>
-              <CloseIcon />
-            </CloseButton>
-          </SContentHeader>
+          {isImageLoading && <LoaderText>Loading...</LoaderText>}
           <Image
             onLoadStart={() => setIsImageLoading(true)}
             onLoadEnd={() => setIsImageLoading(false)}
+            onError={console.error}
             source={{uri: imageUrl}}
           />
         </SContentWrapper>
@@ -46,16 +43,10 @@ export const ImageModal = ({visible, onClose, imageUrl}: Props) => {
 };
 
 const SModalContent = styled.View`
+  position: relative;
   flex: 1;
   justify-content: center;
   align-items: center;
-`;
-
-const SContentWrapper = styled.View`
-  flex-grow: 1;
-  width: 100%;
-  height: 100%;
-  background-color: #2c2c2d;
 `;
 
 const SContentHeader = styled.View`
@@ -68,8 +59,18 @@ const SContentHeader = styled.View`
 
 const CloseButton = styled.TouchableOpacity`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 40px;
+  right: 15px;
+`;
+
+const SContentWrapper = styled.View`
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #2c2c2d;
+
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.Image`
@@ -77,18 +78,12 @@ const Image = styled.Image`
   height: 100%;
 `;
 
-const LoaderWrapper = styled.View`
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  position: absolute;
-
-  justify-content: center;
-  align-items: center;
-`;
-
 const LoaderText = styled.Text`
   color: white;
   font-weight: 600;
   font-size: 20px;
+
+  position: absolute;
+  top: 50%;
+  z-index: 100;
 `;

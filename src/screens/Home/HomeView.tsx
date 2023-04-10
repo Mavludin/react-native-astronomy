@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
-import {Linking} from 'react-native';
+import {Linking, useWindowDimensions} from 'react-native';
 import axios from 'axios';
 import {Header} from 'components/Header';
 import {ImageModal} from 'components/ImageModal';
@@ -9,6 +9,8 @@ import {DataItem} from 'utils/data';
 export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const {width: screenWidth} = useWindowDimensions();
 
   useEffect(() => {
     axios
@@ -32,7 +34,7 @@ export const HomeView = () => {
 
         <BodyContainer>
           <PressableContainer onPress={() => setModalVisible(true)}>
-            <Image source={{uri: data.url}} />
+            <Image width={screenWidth - 40} source={{uri: data.url}} />
           </PressableContainer>
           <InnerContainer>
             <Title>{data.title}</Title>
@@ -76,8 +78,8 @@ const PressableContainer = styled.TouchableOpacity`
   overflow: hidden;
 `;
 
-const Image = styled.Image`
-  width: 100%;
+const Image = styled.Image<{width: number}>`
+  width: ${({width}) => width}px;
   height: 100%;
 `;
 
