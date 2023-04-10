@@ -5,6 +5,7 @@ import axios from 'axios';
 import {Header} from 'components/Header';
 import {ImageModal} from 'components/ImageModal';
 import {DataItem} from 'utils/data';
+import FastImage from 'react-native-fast-image';
 
 export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
@@ -23,6 +24,19 @@ export const HomeView = () => {
     Linking.openURL('https://go-apod.herokuapp.com/#api-docs');
   }, []);
 
+  useEffect(() => {
+    if (data?.url && data.hdurl) {
+      FastImage.preload([
+        {
+          uri: data.url,
+        },
+        {
+          uri: data.hdurl,
+        },
+      ]);
+    }
+  }, [data?.hdurl, data?.url]);
+
   if (!data) {
     return null;
   }
@@ -34,14 +48,19 @@ export const HomeView = () => {
 
         <BodyContainer>
           <PressableContainer onPress={() => setModalVisible(true)}>
-            <Image width={screenWidth - 40} source={{uri: data.url}} />
+            <FastImage
+              style={{width: screenWidth - 40, height: '100%'}}
+              source={{uri: data.url}}
+            />
           </PressableContainer>
+
           <InnerContainer>
             <Title>{data.title}</Title>
             <Date>{data.date}</Date>
             <Description>{data.explanation}</Description>
           </InnerContainer>
         </BodyContainer>
+
         <ResourceButton onPress={openWeb}>
           <ResourceText>Ссылка на ресурс</ResourceText>
         </ResourceButton>
@@ -76,11 +95,6 @@ const PressableContainer = styled.TouchableOpacity`
   border-radius: 12px;
   margin-bottom: 20px;
   overflow: hidden;
-`;
-
-const Image = styled.Image<{width: number}>`
-  width: ${({width}) => width}px;
-  height: 100%;
 `;
 
 const InnerContainer = styled.View`

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Modal} from 'react-native';
+import {Modal, useWindowDimensions} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import styled from 'styled-components/native';
 
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const ImageModal = ({visible, onClose, imageUrl}: Props) => {
+  const {width: screenWidth} = useWindowDimensions();
   const [isImageLoading, setIsImageLoading] = useState(false);
 
   return (
@@ -28,13 +30,18 @@ export const ImageModal = ({visible, onClose, imageUrl}: Props) => {
             <CloseIcon />
           </CloseButton>
         </SContentHeader>
+
         <SContentWrapper>
           {isImageLoading && <LoaderText>Loading...</LoaderText>}
-          <Image
+          <FastImage
+            style={{width: screenWidth, height: '100%'}}
+            source={{
+              uri: imageUrl,
+              priority: FastImage.priority.normal,
+            }}
             onLoadStart={() => setIsImageLoading(true)}
             onLoadEnd={() => setIsImageLoading(false)}
             onError={console.error}
-            source={{uri: imageUrl}}
           />
         </SContentWrapper>
       </SModalContent>
@@ -71,11 +78,6 @@ const SContentWrapper = styled.View`
 
   justify-content: center;
   align-items: center;
-`;
-
-const Image = styled.Image`
-  width: 100%;
-  height: 100%;
 `;
 
 const LoaderText = styled.Text`
