@@ -7,10 +7,12 @@ import {ImageModal} from 'components/ImageModal';
 import {DataItem} from 'utils/data';
 import FastImage from 'react-native-fast-image';
 import {Loader} from 'components/Loader';
+import {FasterImage} from 'components/FasterImage';
 
 export const HomeView = () => {
   const [data, setData] = useState<DataItem | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   const {width: screenWidth} = useWindowDimensions();
 
@@ -49,10 +51,17 @@ export const HomeView = () => {
         <Header />
 
         <BodyContainer>
-          <PressableContainer onPress={() => setModalVisible(true)}>
-            <FastImage
-              style={{width: screenWidth - 40, height: '100%'}}
-              source={{uri: data.url}}
+          <PressableContainer
+            disabled={isImageLoading}
+            isImageLoading={isImageLoading}
+            onPress={() => setModalVisible(true)}>
+            {isImageLoading && <LoaderText>Loading...</LoaderText>}
+
+            <FasterImage
+              width={screenWidth - 40}
+              uri={data.url}
+              onLoadStart={() => setIsImageLoading(true)}
+              onLoadEnd={() => setIsImageLoading(false)}
             />
           </PressableContainer>
 
@@ -92,12 +101,27 @@ const BodyContainer = styled.View`
   border-radius: 20px;
 `;
 
-const PressableContainer = styled.TouchableOpacity`
+const PressableContainer = styled.TouchableOpacity<{isImageLoading: boolean}>`
   width: 100%;
   height: 200px;
   border-radius: 12px;
   margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
+  border: ${({isImageLoading}) =>
+    isImageLoading ? '2px solid #232323' : 'none'};
+  border-radius: 20px;
+`;
+
+const LoaderText = styled.Text`
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+
+  position: absolute;
+  top: 50%;
+  z-index: 100;
 `;
 
 const InnerContainer = styled.View`
