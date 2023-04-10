@@ -5,15 +5,12 @@ import {FormErrors} from './FormErrors';
 import {useAppDispatch} from 'store/hooks';
 import {signIn} from 'store/slices/auth';
 import {SpaceshipIcon} from 'components/icons/SpaceshipIcon';
+import AndroidKeyboardAdjust from 'rn-android-keyboard-adjust';
+import {IS_ANDROID} from 'utils/device';
 
 const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
-type Props = {
-  handleInputFocus: () => void;
-  handleInputBlur: () => void;
-};
-
-export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
+export const SignInForm = () => {
   const dispatch = useAppDispatch();
 
   const [login, setLogin] = useState('');
@@ -27,6 +24,12 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
   const [isLoginValid, seIsLoginValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPassValid, setIsPassValid] = useState(true);
+
+  const handleInputFocus = useCallback(() => {
+    if (IS_ANDROID) {
+      AndroidKeyboardAdjust.setAdjustNothing();
+    }
+  }, []);
 
   // Поэтапная валидация
   const handleSignIn = useCallback(() => {
@@ -89,7 +92,6 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
         textContentType="username"
         onSubmitEditing={() => emailRef.current?.focus()}
         onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
         autoComplete="username"
       />
       <FormInput
@@ -105,7 +107,6 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
         ref={emailRef}
         onSubmitEditing={() => passwordRef.current?.focus()}
         onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
         caretHidden={false}
         autoComplete="email"
       />
@@ -120,7 +121,6 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
         value={password}
         ref={passwordRef}
         onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
         autoComplete="password"
       />
 
@@ -140,7 +140,6 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
 const FormContainer = styled.View`
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
   width: 100%;
   row-gap: 20px;
 `;
@@ -162,7 +161,6 @@ const FormInput = styled.TextInput`
   padding-left: 15px;
   padding-right: 15px;
   color: white;
-  position: relative;
 `;
 
 const SubmitBtn = styled.TouchableOpacity`
