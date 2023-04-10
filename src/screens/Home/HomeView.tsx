@@ -79,6 +79,7 @@ const SafeArea = styled.SafeAreaView`
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: #2c2c2d;
+  height: 100%;
 `;
 
 const Container = styled.ScrollView`

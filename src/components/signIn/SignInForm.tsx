@@ -5,6 +5,7 @@ import {FormErrors} from './FormErrors';
 import {useAppDispatch} from 'store/hooks';
 import {signIn} from 'store/slices/auth';
 import {SpaceshipIcon} from 'components/icons/SpaceshipIcon';
+import {FormInput} from './FormInput';
 
 const VALID_EMAIL_REGEX = /^[a-z0-9._]+@[a-z]+\.[a-z]{2,3}$/gi;
 
@@ -77,51 +78,41 @@ export const SignInForm = ({handleInputFocus, handleInputBlur}: Props) => {
     <FormContainer>
       <SpaceshipIcon />
       <MainTitle>Вход в космос</MainTitle>
+
       <FormInput
         placeholder="Login..."
-        placeholderTextColor="gray"
         onChangeText={setLogin}
         value={login}
-        autoCapitalize="none"
-        autoCorrect={false}
         returnKeyType="next"
         textContentType="username"
-        onSubmitEditing={() => emailRef.current?.focus()}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         autoComplete="username"
       />
       <FormInput
         placeholder="Email..."
-        placeholderTextColor="gray"
         onChangeText={setEmail}
         value={email}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        returnKeyType="next"
+        returnKeyType="done"
         textContentType="emailAddress"
-        ref={emailRef}
-        onSubmitEditing={() => passwordRef.current?.focus()}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-        caretHidden={false}
         autoComplete="email"
+        keyboardType="email-address"
+        ref={emailRef}
       />
       <FormInput
-        placeholder="Password..."
-        placeholderTextColor="gray"
+        placeholder="Email..."
         onChangeText={setPassword}
-        textContentType="password"
-        autoCorrect={false}
-        autoCapitalize="none"
-        returnKeyType="done"
         value={password}
-        ref={passwordRef}
+        returnKeyType="next"
+        textContentType="emailAddress"
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         autoComplete="password"
+        ref={passwordRef}
       />
+
       <SubmitBtn onPress={handleSignIn}>
         <Title>Войти</Title>
       </SubmitBtn>
@@ -148,19 +139,6 @@ const MainTitle = styled.Text`
   font-weight: 800;
   margin-bottom: 15px;
   color: #8120f7;
-`;
-
-const FormInput = styled.TextInput`
-  width: 100%;
-  height: 45px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid gray;
-  border-radius: 20px;
-  padding-left: 15px;
-  padding-right: 15px;
-  color: white;
-  position: relative;
 `;
 
 const SubmitBtn = styled.TouchableOpacity`
